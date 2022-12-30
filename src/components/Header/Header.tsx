@@ -8,8 +8,7 @@ import { NavLink } from 'react-router-dom'
 // import { Cart } from '../../pages/Cart/Cart'
 
 export function Header() {
-  const { ItemsInCard } = useContext(CardContext)
-  console.log(ItemsInCard)
+  const { itemsInCard } = useContext(CardContext)
   return (
     <HeaderContainer>
       <Wrapper>
@@ -20,9 +19,10 @@ export function Header() {
             <img src={pinImg} alt="" />
             <p>Areia Branca, SE</p>
           </div>
+
           <NavLink to="/cart">
             <img src={cartImg} alt="" />
-            <span>{ItemsInCard.length}</span>
+            <span>{itemsInCard.length}</span>
           </NavLink>
         </Navigation>
       </Wrapper>

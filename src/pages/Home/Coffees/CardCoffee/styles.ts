@@ -112,7 +112,7 @@ export const BoxInputsAndButtons = styled.div`
     background-color: ${(props) => props.theme['base-button']};
 
     border: none;
-    padding: 0.7rem 0.8rem;
+    padding: 0.71rem 0.8rem;
 
     outline: none;
 
@@ -165,4 +165,14 @@ export const ButtonAddInCardContent = styled.button`
   border-radius: 6px;
 
   border: none;
+
+  transition: background 0.1s;
+
+  &:not(:disabled):hover {
+    background-color: ${(props) => props.theme.purple};
+  }
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `

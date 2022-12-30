@@ -4,17 +4,6 @@ import { CoffesContainer, CoffesContent, Wrapper } from './styles'
 import { useContext } from 'react'
 import { CardContext, CardProps } from '../../../context/CardContext'
 
-// interface ItemOfCardProps {
-//   id: string
-//   src: string
-//   value: string
-//   subTitle: string
-// }
-
-// interface CardContextProps {
-//   addNewItemInCard:
-// }
-
 export function Coffes() {
   const { contentCoffee } = useContext(CardContext)
 
@@ -36,6 +25,7 @@ export function Coffes() {
                 subTitle={item.subTitle}
                 descriptionOne={item.descriptionOne}
                 descriptionTwo={item.descriptionTwo}
+                amount={item.amount}
               />
             )
           })}

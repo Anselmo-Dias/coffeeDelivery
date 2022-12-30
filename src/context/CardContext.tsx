@@ -18,13 +18,14 @@ import coffeeIrlandêsImg from '../../src/assets/typesCoffe/Irlandês.svg'
 export interface CardProps {
   id: string
   src: string
-  value: string
+  value: number
   title: string
   subTitle: string
   titleSegundary?: string
   titleTertiary?: string
   descriptionOne: string
   descriptionTwo: string
+  amount: number
 }
 
 interface CardsContextProviderProps {
@@ -34,80 +35,89 @@ interface CardsContextProviderProps {
 export const CardContext = createContext({} as any)
 
 export function CardContextProvider({ children }: CardsContextProviderProps) {
-  const [ItemsInCard, setItemsInCard] = useState<[] | {}>([])
+  const [itemsInCard, setItemsInCard] = useState<CardProps[]>([])
+
+  console.log(itemsInCard)
 
   const contentCoffee = [
     {
       id: String(Math.random() * 10),
       src: `${coffeeNormalImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       subTitle: 'Expresso Tradicional ',
       descriptionOne: 'O tradicional café feito com água ',
       descriptionTwo: 'quente e grãos moídos',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeAmericanoImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       subTitle: 'Expresso Americano',
       descriptionOne: 'Expresso diluído, menos intenso',
       descriptionTwo: 'que o tradicional',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeCremosoImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       subTitle: 'Expresso Cremoso',
       descriptionOne: 'Café expresso tradicional com',
       descriptionTwo: 'espuma cremosa',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeColdImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       titleSegundary: 'gelado',
       subTitle: 'Expresso Gelado',
       descriptionOne: 'Bebida preparada com café',
       descriptionTwo: 'expresso e cubos de gelo',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeAndMilkImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       titleSegundary: 'com leite',
       subTitle: 'Café com Leite',
       descriptionOne: 'Meio a meio de expresso ',
       descriptionTwo: 'tradicional com leite vaporizado',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeLatteImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       titleSegundary: 'com leite',
       subTitle: 'Latte',
       descriptionOne: 'Uma dose de café expresso com o',
       descriptionTwo: 'dobro de leite e espuma cremosa',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeCapuccinoImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       titleSegundary: 'com leite',
       subTitle: 'Capuccino',
       descriptionOne: 'Bebida com canela feita de doses',
       descriptionTwo: 'iguais de café, leite e espuma',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeMacchiatoImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       titleSegundary: 'com leite',
       subTitle: 'Macchiato',
@@ -117,71 +127,91 @@ export function CardContextProvider({ children }: CardsContextProviderProps) {
     {
       id: String(Math.random() * 10),
       src: `${coffeeMochaccinoImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       titleSegundary: 'com leite',
       subTitle: 'Mocaccino',
       descriptionOne: 'Café expresso com calda de',
       descriptionTwo: 'chocolate, pouco leite e espuma',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeChocolateQuenteImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'Tradicional',
       titleSegundary: 'com leite',
       subTitle: 'Chocolate Quente',
       descriptionOne: 'Bebida feita com chocolate',
       descriptionTwo: 'dissolvido no leite quente e café ',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeCubanoImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'especial',
       titleSegundary: 'alcoólico',
       titleTertiary: 'gelado',
       subTitle: 'Cubano',
       descriptionOne: 'Drink gelado de café expresso ',
       descriptionTwo: 'com rum, creme de leite e hortelã',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeHavaianoImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'especial',
       subTitle: 'Havaiano',
       descriptionOne: 'Bebida adocicada preparada com',
       descriptionTwo: 'café e leite de coco',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeArabeImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'especial',
       subTitle: 'Árabe',
       descriptionOne: 'Bebida preparada com grãos de',
       descriptionTwo: 'café árabe e especiarias',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
       src: `${coffeeIrlandêsImg}`,
-      value: '9,90',
+      value: 9.9,
       title: 'especial',
       titleSegundary: 'alcoólico',
       subTitle: 'Irlandês',
       descriptionOne: 'Bebida a base de café, uísque ',
       descriptionTwo: 'irlandês, açúcar e chantilly',
+      amount: 1,
     },
   ]
 
-  function addNewItemInCard(item: CardProps[]) {
-    setItemsInCard((state) => [...state, item])
+  const amountItemCatalog = addNewItemInCard
+
+  function addNewItemInCard(getItemCatalog: CardProps, amountOfCoffee: number) {
+    getItemCatalog.amount = amountOfCoffee
+    setItemsInCard((state) => [...state, getItemCatalog])
+    const amountItemCatalog = getItemCatalog.amount
+
+    return amountItemCatalog
   }
+
+  console.log(amountItemCatalog)
 
   return (
     <CardContext.Provider
-      value={{ addNewItemInCard, contentCoffee, ItemsInCard, setItemsInCard }}
+      value={{
+        addNewItemInCard,
+        contentCoffee,
+        itemsInCard,
+        setItemsInCard,
+        amountItemCatalog,
+      }}
     >
       {children}
     </CardContext.Provider>

@@ -53,6 +53,7 @@ export const Navigation = styled.nav`
     border-radius: 6px;
 
     position: relative;
+
     img {
       width: 18.56px;
       color: ${(props) => props.theme['yellow-light']};

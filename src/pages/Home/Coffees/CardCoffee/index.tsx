@@ -22,32 +22,34 @@ export function CardCoffee({
   titleSegundary,
   titleTertiary,
 }: CardProps) {
-  const { addNewItemInCard, contentCoffee } = useContext(CardContext)
+  const { addNewItemInCard, contentCoffee, itemsInCard } =
+    useContext(CardContext)
   const [amountOfCoffee, setAmountOfCoffee] = useState(1)
 
-  const getItemCard = contentCoffee.find((item: CardProps) => {
+  const getItemCatalog = contentCoffee.find((item: CardProps) => {
     return item.subTitle === subTitle
   })
 
-  const priceOfCoffeeAccordingToQuantity = Math.floor(9.9 * amountOfCoffee) + 1
+  const priceOfCoffeeAccordingToQuantity =
+    Math.floor(value * amountOfCoffee) + 1
 
   function addItemOfCard() {
-    addNewItemInCard(getItemCard)
-  }
-
-  function incrementAmountCoffee() {
-    setAmountOfCoffee((state: number) => {
-      if (state >= 1 && state <= 8) {
-        state = state + 1
-      }
-      return state
-    })
+    addNewItemInCard(getItemCatalog, amountOfCoffee)
   }
 
   function decrementAmountCoffee() {
     setAmountOfCoffee((state: number) => {
       if (state >= 2 && state <= 9) {
         state = state - 1
+      }
+      return state
+    })
+  }
+
+  function incrementAmountCoffee() {
+    setAmountOfCoffee((state: number) => {
+      if (state >= 1 && state <= 8) {
+        state = state + 1
       }
       return state
     })
@@ -85,7 +87,10 @@ export function CardCoffee({
             />
             <Increment onClick={incrementAmountCoffee}>+</Increment>
           </BoxInputsAndButtons>
-          <ButtonAddInCardContent onClick={addItemOfCard}>
+          <ButtonAddInCardContent
+            disabled={itemsInCard.length === 3}
+            onClick={addItemOfCard}
+          >
             <svg
               width="20"
               height="18"
