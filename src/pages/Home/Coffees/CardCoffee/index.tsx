@@ -34,7 +34,11 @@ export function CardCoffee({
     Math.floor(value * amountOfCoffee) + 1
 
   function addItemOfCard() {
-    addNewItemInCard(getItemCatalog, amountOfCoffee)
+    addNewItemInCard(
+      getItemCatalog,
+      amountOfCoffee,
+      priceOfCoffeeAccordingToQuantity,
+    )
   }
 
   function decrementAmountCoffee() {

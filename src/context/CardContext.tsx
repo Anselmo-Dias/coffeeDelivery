@@ -36,9 +36,7 @@ export const CardContext = createContext({} as any)
 
 export function CardContextProvider({ children }: CardsContextProviderProps) {
   const [itemsInCard, setItemsInCard] = useState<CardProps[]>([])
-
   console.log(itemsInCard)
-
   const contentCoffee = [
     {
       id: String(Math.random() * 10),
@@ -191,17 +189,15 @@ export function CardContextProvider({ children }: CardsContextProviderProps) {
     },
   ]
 
-  const amountItemCatalog = addNewItemInCard
-
-  function addNewItemInCard(getItemCatalog: CardProps, amountOfCoffee: number) {
+  function addNewItemInCard(
+    getItemCatalog: CardProps,
+    amountOfCoffee: number,
+    priceOfCoffeeAccordingToQuantity: number,
+  ) {
     getItemCatalog.amount = amountOfCoffee
+    getItemCatalog.value = priceOfCoffeeAccordingToQuantity
     setItemsInCard((state) => [...state, getItemCatalog])
-    const amountItemCatalog = getItemCatalog.amount
-
-    return amountItemCatalog
   }
-
-  console.log(amountItemCatalog)
 
   return (
     <CardContext.Provider
@@ -210,7 +206,6 @@ export function CardContextProvider({ children }: CardsContextProviderProps) {
         contentCoffee,
         itemsInCard,
         setItemsInCard,
-        amountItemCatalog,
       }}
     >
       {children}

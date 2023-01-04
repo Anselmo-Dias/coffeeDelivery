@@ -1,3 +1,5 @@
+import { useContext } from 'react'
+import { CardContext, CardProps } from '../../context/CardContext'
 import { ItemOfShoppingCart } from './ItemOfShoppingCart'
 import {
   BoxButtonsOfPayment,
@@ -7,12 +9,25 @@ import {
   FormOfPaymentContainer,
   ItemsInCardAndConfirmRequest,
   PriceAndButtonOfConfirmRequest,
+  WarningContent,
   Wrapper,
 } from './styles'
 
 // import coffeeNormalImg from '../../assets/typesCoffe/normal.svg'
 
 export function Cart() {
+  const { itemsInCard } = useContext(CardContext)
+
+  const totalItems = itemsInCard.reduce(function (
+    acumulador: number,
+    { value }: CardProps,
+  ) {
+    return acumulador + value
+  },
+  0)
+
+  const resultFinaly = totalItems + 3.5
+
   return (
     <CartContainer>
       <Wrapper>
@@ -285,27 +300,44 @@ export function Cart() {
             </BoxButtonsOfPayment>
           </FormOfPaymentContainer>
         </FormContainer>
-        <ItemsInCardAndConfirmRequest>
-          <ItemOfShoppingCart />
-          <PriceAndButtonOfConfirmRequest>
-            <div>
-              <p>Total de itens</p>
-              <span>R$ 29,70 </span>
-            </div>
-            <div>
-              <p>Entrega</p>
-              <span>R$ 3,50</span>
-            </div>
-            <div>
-              <p>Entrega</p>
-              <span>R$ 33,20</span>
-            </div>
+        {itemsInCard.length > 0 ? (
+          <ItemsInCardAndConfirmRequest>
+            {itemsInCard.map((item: CardProps) => {
+              return (
+                <ItemOfShoppingCart
+                  key={item.id}
+                  id={item.id}
+                  subTitle={item.subTitle}
+                  src={item.src}
+                  value={item.value}
+                  amount={item.amount}
+                />
+              )
+            })}
+            <PriceAndButtonOfConfirmRequest>
+              <div>
+                <p>Total de itens</p>
+                <span>R$ {totalItems.toFixed(2)} </span>
+              </div>
+              <div>
+                <p>Entrega</p>
+                <span>R$ 3.50</span>
+              </div>
+              <div>
+                <p>Total</p>
+                <span>R$ {resultFinaly.toFixed(2)}</span>
+              </div>
 
-            <button type="submit" form="address">
-              confirmar pedido
-            </button>
-          </PriceAndButtonOfConfirmRequest>
-        </ItemsInCardAndConfirmRequest>
+              <button type="submit" form="address">
+                confirmar pedido
+              </button>
+            </PriceAndButtonOfConfirmRequest>
+          </ItemsInCardAndConfirmRequest>
+        ) : (
+          <WarningContent>
+            <strong>Carinho Vazio</strong>
+          </WarningContent>
+        )}
       </Wrapper>
     </CartContainer>
   )

@@ -14,6 +14,29 @@ export const Wrapper = styled(WrapperContainer)`
   margin-top: 4rem;
   padding-bottom: 1rem;
 `
+
+export const WarningContent = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 30rem;
+
+  background-color: ${(props) => props.theme['base-card']};
+  transform: translateY(3.8rem);
+
+  padding: 2rem;
+
+  border-radius: 6px;
+
+  font-family: 'Baloo 2';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 1.8rem;
+  line-height: 130%;
+  color: ${(props) => props.theme['base-subtitle']};
+`
+
 export const FormContainer = styled.div`
   & > strong {
     font-family: 'Baloo 2';

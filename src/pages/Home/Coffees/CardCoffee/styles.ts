@@ -143,6 +143,10 @@ export const Decrement = styled.button`
   border-bottom-left-radius: 6px;
 
   outline: none;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `
 export const Increment = styled.button`
   padding: 1rem;
@@ -154,6 +158,10 @@ export const Increment = styled.button`
   border-bottom-right-radius: 6px;
 
   outline: none;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
 `
 export const ButtonAddInCardContent = styled.button`
   display: flex;
