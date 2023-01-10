@@ -279,8 +279,17 @@ export const PriceAndButtonOfConfirmRequest = styled.div`
     font-stretch: 100;
     transition: background 0.1s;
 
-    &:hover {
+    &:not(:disabled):hover {
       background-color: ${(props) => props.theme['yellow-dark']};
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
+
+    &:disabled:first-child {
+      cursor: not-allowed;
+      pointer-events: none;
     }
   }
 `

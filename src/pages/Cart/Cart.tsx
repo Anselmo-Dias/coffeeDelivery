@@ -1,6 +1,9 @@
 import { useContext } from 'react'
+import { useForm } from 'react-hook-form'
 import { CardContext, CardProps } from '../../context/CardContext'
 import { ItemOfShoppingCart } from './ItemOfShoppingCart'
+import { zodResolver } from '@hookform/resolvers/zod'
+import * as zod from 'zod'
 import {
   BoxButtonsOfPayment,
   CartContainer,
@@ -12,10 +15,37 @@ import {
   WarningContent,
   Wrapper,
 } from './styles'
+import { NavLink } from 'react-router-dom'
 
-// import coffeeNormalImg from '../../assets/typesCoffe/normal.svg'
+const formValidationSchema = zod.object({
+  zidCode: zod.number().min(8, 'a quantidade mínima é 8 caracteres'),
+  street: zod.string().min(2, 'a quantidade mínima é 8 caracteres'),
+  numberHouse: zod.number().min(1, 'a quantidade mínima é 1 caracteres'),
+  complement: zod
+    .string()
+    .min(1, 'a quantidade mínima é 1 caracteres')
+    .max(25, 'a quantidade máxima é 25 caracteres'),
+  district: zod
+    .string()
+    .min(1, 'a quantidade mínima é 1 caracteres')
+    .max(7, 'a quantidade máxima é 7 caracteres'),
+  city: zod
+    .string()
+    .min(1, 'a quantidade mínima é 1 caracteres')
+    .max(25, 'a quantidade máxima é 25 caracteres'),
+  uf: zod
+    .string()
+    .min(2, 'a quantidade mínima é 2 caracteres')
+    .max(2, 'a quantidade máxima é 2 caracteres'),
+})
+
+type typeFormDataProps = zod.infer<typeof formValidationSchema>
 
 export function Cart() {
+  const { register, handleSubmit, reset, watch } = useForm<typeFormDataProps>({
+    resolver: zodResolver(formValidationSchema),
+  })
+
   const { itemsInCard } = useContext(CardContext)
 
   const totalItems = itemsInCard.reduce(function (
@@ -27,6 +57,14 @@ export function Cart() {
   0)
 
   const resultFinaly = totalItems + 3.5
+
+  function handleSavedInforOfUser(data: typeFormDataProps) {
+    console.log(data)
+    reset()
+  }
+
+  const zidCode = watch('zidCode')
+  const isSubmitDisabled = !zidCode
 
   return (
     <CartContainer>
@@ -68,38 +106,70 @@ export function Cart() {
               </div>
             </FormHeaderContainer>
 
-            <form action="" method="POST" id="address">
-              <input type="number" name="CEP" placeholder="CEP" required />
-              <input type="text" name="Rua" placeholder="Rua" required />
+            <form
+              onSubmit={handleSubmit(handleSavedInforOfUser)}
+              method="POST"
+              id="address"
+            >
+              <input
+                id="zidCode"
+                type="text"
+                minLength={8}
+                maxLength={8}
+                placeholder="Cep 00000-000"
+                required
+                {...register('zidCode', { valueAsNumber: true })}
+              />
+              <input
+                id="street"
+                type="text"
+                maxLength={100}
+                minLength={8}
+                placeholder="Rua"
+                required
+                {...register('street')}
+              />
               <div>
                 <div>
                   <input
-                    type="number"
-                    name="Número"
-                    placeholder="Número"
+                    type="text"
+                    placeholder="Número da casa"
+                    minLength={1}
+                    maxLength={4}
                     required
+                    {...register('numberHouse', { valueAsNumber: true })}
                   />
                   <input
                     type="text"
-                    name="Complemento"
                     placeholder="Complemento"
-                    required
+                    maxLength={50}
+                    {...register('complement')}
                   />
                 </div>
                 <div>
                   <input
                     type="text"
-                    name="Bairro"
                     placeholder="Bairro"
+                    maxLength={15}
                     required
+                    {...register('district')}
                   />
                   <input
                     type="text"
-                    name="Cidade"
                     placeholder="Cidade"
+                    maxLength={70}
+                    minLength={5}
                     required
+                    {...register('city')}
                   />
-                  <input type="text" name="UF" placeholder="UF" required />
+                  <input
+                    type="text"
+                    placeholder="UF"
+                    maxLength={2}
+                    minLength={2}
+                    required
+                    {...register('uf')}
+                  />
                 </div>
               </div>
             </form>
@@ -328,8 +398,8 @@ export function Cart() {
                 <span>R$ {resultFinaly.toFixed(2)}</span>
               </div>
 
-              <button type="submit" form="address">
-                confirmar pedido
+              <button disabled={isSubmitDisabled} type="submit" form="address">
+                <NavLink to="/end">Confirmar pedido</NavLink>
               </button>
             </PriceAndButtonOfConfirmRequest>
           </ItemsInCardAndConfirmRequest>
