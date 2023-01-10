@@ -285,11 +285,13 @@ export const PriceAndButtonOfConfirmRequest = styled.div`
 
     &:disabled {
       cursor: not-allowed;
+      pointer-events: none;
     }
 
     &:disabled {
-      cursor: not-allowed;
-      /* pointer-events: none; */
     }
+  }
+  a {
+    color: ${(props) => props.theme.purple};
   }
 `

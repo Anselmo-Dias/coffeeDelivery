@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useState } from 'react'
+import { createContext, ReactNode, useEffect, useState } from 'react'
 
 import coffeeNormalImg from '../../src/assets/typesCoffe/normal.svg'
 import coffeeAmericanoImg from '../../src/assets/typesCoffe/Americano.svg'
@@ -48,6 +48,12 @@ export function CardContextProvider({ children }: CardsContextProviderProps) {
   const [itemsInCard, setItemsInCard] = useState<CardProps[]>([])
   const [inforsForm, setInforsForm] = useState<typeFormDataProps[]>([])
   const [formPayment, setFormPayment] = useState<String>('')
+
+  useEffect(() => {
+    const formJSON = JSON.stringify(inforsForm)
+
+    localStorage.setItem('@Coffee-Delivery:cart-state-1.0.0 ', formJSON)
+  }, [inforsForm])
 
   const contentCoffee = [
     {

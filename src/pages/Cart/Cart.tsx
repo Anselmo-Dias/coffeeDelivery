@@ -74,9 +74,8 @@ export function Cart() {
     setFormPayment('dinheiro')
   }
 
-  const zidCode = watch('zidCode')
   const uf = watch('uf')
-  const isSubmitDisabled = !zidCode && !uf
+  const isSubmitDisabled = !uf
 
   return (
     <CartContainer>
@@ -411,12 +410,11 @@ export function Cart() {
               </div>
 
               <button disabled={isSubmitDisabled} type="submit" form="address">
-                <NavLink to="/end">
-                  {isSubmitDisabled
-                    ? 'Preencha os campos'
-                    : 'Confirme seu pedido'}
-                </NavLink>
+                {isSubmitDisabled
+                  ? 'Preencha os campos'
+                  : 'Confirme seu pedido'}
               </button>
+              <NavLink to="/end">Ver prazo</NavLink>
             </PriceAndButtonOfConfirmRequest>
           </ItemsInCardAndConfirmRequest>
         ) : (
