@@ -8,8 +8,13 @@ import {
 } from './styles'
 
 import confirmedImg from '../../../assets/confirmed.svg'
+import { useContext } from 'react'
+import { CardContext } from '../../../context/CardContext'
 
 export function ConfirmedPurchase() {
+  const { inforsForm, formPayment } = useContext(CardContext)
+  console.log(inforsForm)
+
   return (
     <ConfirmedPurchaseContainer>
       <Wrapper>
@@ -35,9 +40,14 @@ export function ConfirmedPurchase() {
 
                 <div>
                   <p>
-                    Entrega em <span>Rua João Daniel Martinelli, 102</span>
+                    Entrega em{' '}
+                    <span>
+                      {inforsForm[0].street}, {inforsForm[0].numberHouse}
+                    </span>
                   </p>
-                  <p>Farrapos - Porto Alegre, RS</p>
+                  <p>
+                    {inforsForm[0].city}, {inforsForm[0].uf}
+                  </p>
                 </div>
               </Item>
 
@@ -94,7 +104,7 @@ export function ConfirmedPurchase() {
                 <div>
                   <p>Pagamento na entrega</p>
                   <p>
-                    <span>Cartão de Crédito</span>
+                    <span>{formPayment}</span>
                   </p>
                 </div>
               </Item>

@@ -32,11 +32,23 @@ interface CardsContextProviderProps {
   children: ReactNode
 }
 
+interface typeFormDataProps {
+  zidCode: number
+  street: string
+  numberHouse: number
+  complement: string
+  district: string
+  city: string
+  uf: string
+}
+
 export const CardContext = createContext({} as any)
 
 export function CardContextProvider({ children }: CardsContextProviderProps) {
   const [itemsInCard, setItemsInCard] = useState<CardProps[]>([])
-  console.log(itemsInCard)
+  const [inforsForm, setInforsForm] = useState<typeFormDataProps[]>([])
+  const [formPayment, setFormPayment] = useState<String>('')
+
   const contentCoffee = [
     {
       id: String(Math.random() * 10),
@@ -199,13 +211,24 @@ export function CardContextProvider({ children }: CardsContextProviderProps) {
     setItemsInCard((state) => [...state, getItemCatalog])
   }
 
+  function savedInforsForm(
+    data: typeFormDataProps,
+    formPaymentOfCoffe: String,
+  ) {
+    setInforsForm([data])
+    setFormPayment(formPaymentOfCoffe)
+  }
+
   return (
     <CardContext.Provider
       value={{
         addNewItemInCard,
         contentCoffee,
+        inforsForm,
         itemsInCard,
         setItemsInCard,
+        savedInforsForm,
+        formPayment,
       }}
     >
       {children}

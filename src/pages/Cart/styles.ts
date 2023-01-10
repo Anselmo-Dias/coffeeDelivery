@@ -287,9 +287,9 @@ export const PriceAndButtonOfConfirmRequest = styled.div`
       cursor: not-allowed;
     }
 
-    &:disabled:first-child {
+    &:disabled {
       cursor: not-allowed;
-      pointer-events: none;
+      /* pointer-events: none; */
     }
   }
 `

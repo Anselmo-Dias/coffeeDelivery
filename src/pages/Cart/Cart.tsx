@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { CardContext, CardProps } from '../../context/CardContext'
 import { ItemOfShoppingCart } from './ItemOfShoppingCart'
@@ -45,8 +45,9 @@ export function Cart() {
   const { register, handleSubmit, reset, watch } = useForm<typeFormDataProps>({
     resolver: zodResolver(formValidationSchema),
   })
+  const { itemsInCard, savedInforsForm } = useContext(CardContext)
 
-  const { itemsInCard } = useContext(CardContext)
+  const [formPayment, setFormPayment] = useState('')
 
   const totalItems = itemsInCard.reduce(function (
     acumulador: number,
@@ -59,12 +60,23 @@ export function Cart() {
   const resultFinaly = totalItems + 3.5
 
   function handleSavedInforOfUser(data: typeFormDataProps) {
-    console.log(data)
+    savedInforsForm(data, formPayment)
     reset()
   }
 
+  function formPaymentInCredit() {
+    setFormPayment('Cartão de crédito')
+  }
+  function formPaymentInDebt() {
+    setFormPayment('cartão de débito')
+  }
+  function formPaymentInCash() {
+    setFormPayment('dinheiro')
+  }
+
   const zidCode = watch('zidCode')
-  const isSubmitDisabled = !zidCode
+  const uf = watch('uf')
+  const isSubmitDisabled = !zidCode && !uf
 
   return (
     <CartContainer>
@@ -207,7 +219,7 @@ export function Cart() {
             </FormHeaderContainer>
 
             <BoxButtonsOfPayment>
-              <button>
+              <button onClick={formPaymentInCredit}>
                 {' '}
                 <svg
                   width="16"
@@ -243,7 +255,7 @@ export function Cart() {
                 </svg>
                 Cartão de crédito
               </button>
-              <button>
+              <button onClick={formPaymentInDebt}>
                 <svg
                   width="17"
                   height="17"
@@ -308,7 +320,7 @@ export function Cart() {
                 </svg>
                 cartão de débito
               </button>
-              <button>
+              <button onClick={formPaymentInCash}>
                 <svg
                   width="17"
                   height="17"
@@ -399,7 +411,11 @@ export function Cart() {
               </div>
 
               <button disabled={isSubmitDisabled} type="submit" form="address">
-                <NavLink to="/end">Confirmar pedido</NavLink>
+                <NavLink to="/end">
+                  {isSubmitDisabled
+                    ? 'Preencha os campos'
+                    : 'Confirme seu pedido'}
+                </NavLink>
               </button>
             </PriceAndButtonOfConfirmRequest>
           </ItemsInCardAndConfirmRequest>
