@@ -55,9 +55,7 @@ interface CardContextProps {
   setFormPayment: Dispatch<SetStateAction<string>>
   formPayment: string
   inforFormUser: typeFormDataProps | undefined
-  // inforsForm: typeFormDataProps[]
   addItemInShoppingCart: (data: CardProps) => void
-  UpInforFormUser: () => void
 }
 
 export const CardContext = createContext({} as CardContextProps)
@@ -232,8 +230,6 @@ export function CardContextProvider({ children }: CardsContextProviderProps) {
     setItemsInCard((state) => [...state, data])
   }
 
-  function UpInforFormUser() {}
-
   return (
     <CardContext.Provider
       value={{
@@ -241,7 +237,7 @@ export function CardContextProvider({ children }: CardsContextProviderProps) {
         itemsInCard,
         contentCoffee,
         addItemInShoppingCart,
-        UpInforFormUser,
+
         setInforFormUser,
         inforFormUser,
         setFormPayment,
