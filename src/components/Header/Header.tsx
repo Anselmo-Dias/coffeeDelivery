@@ -5,7 +5,6 @@ import cartImg from '../../assets/icons/shopping-cart-fill.svg'
 import { CardContext } from '../../context/CardContext'
 import { useContext } from 'react'
 import { NavLink } from 'react-router-dom'
-// import { Cart } from '../../pages/Cart/Cart'
 
 export function Header() {
   const { itemsInCard } = useContext(CardContext)

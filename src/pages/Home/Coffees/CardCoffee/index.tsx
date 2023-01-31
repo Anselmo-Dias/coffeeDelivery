@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { CardContext, CardProps } from '../../../../context/CardContext'
 import {
   BoxInputsAndButtons,
@@ -22,41 +22,19 @@ export function CardCoffee({
   titleSegundary,
   titleTertiary,
 }: CardProps) {
-  const { addNewItemInCard, contentCoffee, itemsInCard } =
+  const { contentCoffee, itemsInCard, addItemInShoppingCart } =
     useContext(CardContext)
-  const [amountOfCoffee, setAmountOfCoffee] = useState(1)
 
-  const getItemCatalog = contentCoffee.find((item: CardProps) => {
-    return item.subTitle === subTitle
-  })
+  function handleInput() {}
 
-  const priceOfCoffeeAccordingToQuantity =
-    Math.floor(value * amountOfCoffee) + 1
-
-  function addItemOfCard() {
-    addNewItemInCard(
-      getItemCatalog,
-      amountOfCoffee,
-      priceOfCoffeeAccordingToQuantity,
-    )
-  }
-
-  function decrementAmountCoffee() {
-    setAmountOfCoffee((state: number) => {
-      if (state >= 2 && state <= 9) {
-        state = state - 1
-      }
-      return state
+  function handleAddItemInShoppingCart() {
+    const getItemCatalog = contentCoffee.findIndex((item: CardProps) => {
+      return item.subTitle === subTitle
     })
-  }
 
-  function incrementAmountCoffee() {
-    setAmountOfCoffee((state: number) => {
-      if (state >= 1 && state <= 8) {
-        state = state + 1
-      }
-      return state
-    })
+    const itemGetToBeCatalog = contentCoffee[getItemCatalog]
+
+    addItemInShoppingCart(itemGetToBeCatalog)
   }
 
   return (
@@ -77,23 +55,33 @@ export function CardCoffee({
         <CardCoffeeButtonsAndPrice>
           <p>
             R$
-            <span>{priceOfCoffeeAccordingToQuantity}</span>
+            <span>10</span>
           </p>
           <BoxInputsAndButtons>
-            <Decrement onClick={decrementAmountCoffee}>-</Decrement>
+            <Decrement
+              disabled
+              title="Atualize a quantidade do produto dentro do carrinho de compras"
+            >
+              -
+            </Decrement>
             <input
               type="number"
               min={1}
               max={9}
-              value={amountOfCoffee}
-              onChange={(e) => setAmountOfCoffee(Number(e.target.value))}
+              value={1}
+              onChange={handleInput}
               required
             />
-            <Increment onClick={incrementAmountCoffee}>+</Increment>
+            <Increment
+              disabled
+              title="Atualize a quantidade do produto dentro do carrinho de compras"
+            >
+              +
+            </Increment>
           </BoxInputsAndButtons>
           <ButtonAddInCardContent
             disabled={itemsInCard.length === 3}
-            onClick={addItemOfCard}
+            onClick={handleAddItemInShoppingCart}
           >
             <svg
               width="20"

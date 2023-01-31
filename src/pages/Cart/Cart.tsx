@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { useForm } from 'react-hook-form'
 import { CardContext, CardProps } from '../../context/CardContext'
 import { ItemOfShoppingCart } from './ItemOfShoppingCart'
@@ -45,9 +45,13 @@ export function Cart() {
   const { register, handleSubmit, reset, watch } = useForm<typeFormDataProps>({
     resolver: zodResolver(formValidationSchema),
   })
-  const { itemsInCard, savedInforsForm } = useContext(CardContext)
-
-  const [formPayment, setFormPayment] = useState('')
+  const {
+    itemsInCard,
+    setInforFormUser,
+    setFormPayment,
+    inforFormUser,
+    formPayment,
+  } = useContext(CardContext)
 
   const totalItems = itemsInCard.reduce(function (
     acumulador: number,
@@ -60,7 +64,8 @@ export function Cart() {
   const resultFinaly = totalItems + 3.5
 
   function handleSavedInforOfUser(data: typeFormDataProps) {
-    savedInforsForm(data, formPayment)
+    setInforFormUser(data)
+    console.log(data)
     reset()
   }
 
@@ -75,7 +80,7 @@ export function Cart() {
   }
 
   const uf = watch('uf')
-  const isSubmitDisabled = !uf
+  const isSubmitDisabled = !uf || !formPayment
 
   return (
     <CartContainer>
@@ -414,7 +419,9 @@ export function Cart() {
                   ? 'Preencha os campos'
                   : 'Confirme seu pedido'}
               </button>
-              <NavLink to="/end">Ver prazo</NavLink>
+              {inforFormUser?.district && (
+                <NavLink to="/end">Ver prazo</NavLink>
+              )}
             </PriceAndButtonOfConfirmRequest>
           </ItemsInCardAndConfirmRequest>
         ) : (

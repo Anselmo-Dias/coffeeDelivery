@@ -1,5 +1,6 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 import { CardContext, CardProps } from '../../../context/CardContext'
+import { useShoppingCart } from '../../../hooks/useShoppingCart'
 import {
   BoxInputsAndButtons,
   Decrement,
@@ -23,9 +24,14 @@ export function ItemOfShoppingCart({
   value,
 }: ItemOfShoppingCartProps) {
   const { itemsInCard, setItemsInCard } = useContext(CardContext)
-  const [amountCoffeeOfShoppingCart, setAmountCoffeeOfShoppingCart] =
-    useState(1)
-  console.log(amountCoffeeOfShoppingCart)
+
+  const {
+    decrementAmountCoffee,
+    incrementAmountCoffee,
+    priceOfCoffeeAccordingToQuantity,
+    amountOfCoffee,
+    setAmountOfCoffee,
+  } = useShoppingCart()
 
   function handleRemoveItemShoppingCart() {
     const updateListItemsInShoppingCart = itemsInCard.filter(
@@ -45,18 +51,15 @@ export function ItemOfShoppingCart({
           <p>{subTitle}</p>
           <div>
             <BoxInputsAndButtons>
-              <Decrement disabled>-</Decrement>
+              <Decrement onClick={decrementAmountCoffee}>-</Decrement>
               <input
                 type="number"
                 min={1}
                 max={9}
-                value={amount}
-                onChange={(e) =>
-                  setAmountCoffeeOfShoppingCart(Number(e.target.value))
-                }
-                disabled
+                value={amountOfCoffee}
+                onChange={(e) => setAmountOfCoffee(Number(e.target.value))}
               />
-              <Increment disabled>+</Increment>
+              <Increment onClick={incrementAmountCoffee}>+</Increment>
             </BoxInputsAndButtons>
             <ButtonRemove onClick={handleRemoveItemShoppingCart}>
               <svg
@@ -101,7 +104,7 @@ export function ItemOfShoppingCart({
             </ButtonRemove>
           </div>
         </div>
-        <span>R${value}</span>
+        <span>R${priceOfCoffeeAccordingToQuantity}</span>
       </ItemsOfCard>
     </>
   )

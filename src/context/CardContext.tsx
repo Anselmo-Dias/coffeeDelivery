@@ -1,5 +1,10 @@
-import { createContext, ReactNode, useEffect, useState } from 'react'
-
+import {
+  createContext,
+  Dispatch,
+  ReactNode,
+  SetStateAction,
+  useState,
+} from 'react'
 import coffeeNormalImg from '../../src/assets/typesCoffe/normal.svg'
 import coffeeAmericanoImg from '../../src/assets/typesCoffe/Americano.svg'
 import coffeeCremosoImg from '../../src/assets/typesCoffe/Expresso Cremoso.svg'
@@ -28,10 +33,6 @@ export interface CardProps {
   amount: number
 }
 
-interface CardsContextProviderProps {
-  children: ReactNode
-}
-
 interface typeFormDataProps {
   zidCode: number
   street: string
@@ -42,20 +43,39 @@ interface typeFormDataProps {
   uf: string
 }
 
-export const CardContext = createContext({} as any)
+interface CardsContextProviderProps {
+  children: ReactNode
+}
+
+interface CardContextProps {
+  contentCoffee: CardProps[]
+  itemsInCard: CardProps[]
+  setItemsInCard: Dispatch<SetStateAction<CardProps[]>>
+  setInforFormUser: Dispatch<SetStateAction<typeFormDataProps>>
+  setFormPayment: Dispatch<SetStateAction<string>>
+  formPayment: string
+  inforFormUser: typeFormDataProps | undefined
+  // inforsForm: typeFormDataProps[]
+  addItemInShoppingCart: (data: CardProps) => void
+  UpInforFormUser: () => void
+}
+
+export const CardContext = createContext({} as CardContextProps)
 
 export function CardContextProvider({ children }: CardsContextProviderProps) {
   const [itemsInCard, setItemsInCard] = useState<CardProps[]>([])
-  const [inforsForm, setInforsForm] = useState<typeFormDataProps[]>([])
-  const [formPayment, setFormPayment] = useState<String>('')
+  const [inforFormUser, setInforFormUser] = useState<typeFormDataProps>(
+    {} as typeFormDataProps,
+  )
+  const [formPayment, setFormPayment] = useState('')
 
-  useEffect(() => {
-    const formJSON = JSON.stringify(inforsForm)
+  // useEffect(() => {
+  //   const formJSON = JSON.stringify(inforsForm)
 
-    localStorage.setItem('@Coffee-Delivery:cart-state-1.0.0 ', formJSON)
-  }, [inforsForm])
+  //   localStorage.setItem('@Coffee-Delivery:cart-state-1.0.0 ', formJSON)
+  // }, [inforsForm])
 
-  const contentCoffee = [
+  const contentCoffee: CardProps[] = [
     {
       id: String(Math.random() * 10),
       src: `${coffeeNormalImg}`,
@@ -139,6 +159,7 @@ export function CardContextProvider({ children }: CardsContextProviderProps) {
       subTitle: 'Macchiato',
       descriptionOne: 'Café expresso misturado com um ',
       descriptionTwo: 'pouco de leite quente e espuma',
+      amount: 1,
     },
     {
       id: String(Math.random() * 10),
@@ -207,33 +228,23 @@ export function CardContextProvider({ children }: CardsContextProviderProps) {
     },
   ]
 
-  function addNewItemInCard(
-    getItemCatalog: CardProps,
-    amountOfCoffee: number,
-    priceOfCoffeeAccordingToQuantity: number,
-  ) {
-    getItemCatalog.amount = amountOfCoffee
-    getItemCatalog.value = priceOfCoffeeAccordingToQuantity
-    setItemsInCard((state) => [...state, getItemCatalog])
+  function addItemInShoppingCart(data: CardProps) {
+    setItemsInCard((state) => [...state, data])
   }
 
-  function savedInforsForm(
-    data: typeFormDataProps,
-    formPaymentOfCoffe: String,
-  ) {
-    setInforsForm([data])
-    setFormPayment(formPaymentOfCoffe)
-  }
+  function UpInforFormUser() {}
 
   return (
     <CardContext.Provider
       value={{
-        addNewItemInCard,
-        contentCoffee,
-        inforsForm,
-        itemsInCard,
         setItemsInCard,
-        savedInforsForm,
+        itemsInCard,
+        contentCoffee,
+        addItemInShoppingCart,
+        UpInforFormUser,
+        setInforFormUser,
+        inforFormUser,
+        setFormPayment,
         formPayment,
       }}
     >

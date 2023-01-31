@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { WrapperContainer } from '../../styles/global'
+import * as RadioGroup from '@radix-ui/react-radio-group'
 
 export const CartContainer = styled.section`
   background-color: ${(props) => props.theme.white};
@@ -198,6 +199,17 @@ export const BoxButtonsOfPayment = styled.div`
   }
 `
 
+export const Root = styled(RadioGroup.Root)``
+export const Group = styled(RadioGroup.RadioGroup)`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+
+  gap: 1rem;
+`
+export const RadioItem = styled(RadioGroup.Item)``
+
 export const ItemsInCardAndConfirmRequest = styled.div`
   display: flex;
   align-items: center;
@@ -285,12 +297,10 @@ export const PriceAndButtonOfConfirmRequest = styled.div`
 
     &:disabled {
       cursor: not-allowed;
-      pointer-events: none;
-    }
-
-    &:disabled {
+      background-color: ${(props) => props.theme['yellow-dark']};
     }
   }
+
   a {
     color: ${(props) => props.theme.purple};
   }

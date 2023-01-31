@@ -12,9 +12,8 @@ import { useContext } from 'react'
 import { CardContext } from '../../../context/CardContext'
 
 export function ConfirmedPurchase() {
-  const { inforsForm, formPayment } = useContext(CardContext)
-  console.log(inforsForm)
-
+  const { inforFormUser, formPayment } = useContext(CardContext)
+  console.log(inforFormUser)
   return (
     <ConfirmedPurchaseContainer>
       <Wrapper>
@@ -49,11 +48,11 @@ export function ConfirmedPurchase() {
                     <p>
                       Entrega em{' '}
                       <span>
-                        {inforsForm[0].street}, {inforsForm[0].numberHouse}
+                        {inforFormUser?.street}, {inforFormUser?.numberHouse}
                       </span>
                     </p>
                     <p>
-                      {inforsForm[0].city}, {inforsForm[0].uf}
+                      {inforFormUser?.city}, {inforFormUser?.uf}
                     </p>
                   </div>
                 </Item>
