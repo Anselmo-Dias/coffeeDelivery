@@ -23,6 +23,8 @@ Projeto criado para ajudar a fortalecer os conhecimentos em React 💙
 
 <img src="https://user-images.githubusercontent.com/96529532/217277185-e0dd66f2-8355-4712-b392-d54d309c1eec.png" width="700"/>
 
+<img src="https://user-images.githubusercontent.com/96529532/217278346-2badf856-406f-489e-9a1d-e6b90243275e.png" width="700" />
+
 <br />
 
 ## :bulb: Funcionalidades:
